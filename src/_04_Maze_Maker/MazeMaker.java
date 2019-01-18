@@ -26,6 +26,31 @@ public class MazeMaker {
 		// 5. call selectNextPath method with the randomly selected cell
 		selectNextPath(maze.cells[rW][rH]);
 
+		
+		
+		int randoW = new Random().nextInt(w);
+		int randoH = new Random().nextInt(h);
+				
+		boolean tb = new Random().nextBoolean();
+		boolean tb2 = new Random().nextBoolean();
+		
+		if(tb == true) {
+			maze.getCell(randoW, 0).setNorthWall(false);
+		} else {
+			maze.getCell(randoW, h-1).setSouthWall(false);
+		}
+		
+		if(tb2 == true) {
+		maze.getCell(0, randoH).setWestWall(false);	
+		} else {
+			maze.getCell(w-1, randoH).setEastWall(false);
+		}
+		
+		
+		
+		
+		
+		
 		return maze;
 	}
 
@@ -35,7 +60,7 @@ public class MazeMaker {
 		currentCell.setBeenVisited(true);
 		// B. check for unvisited neighbors using the cell
 		ArrayList<Cell> unvisits = getUnvisitedNeighbors(currentCell);
-		if (unvisits.size() >= 1) {
+		if (unvisits.size() > 0) {
 			int rand = new Random().nextInt(unvisits.size());
 
 			uncheckedCells.push(unvisits.get(rand));
@@ -45,7 +70,7 @@ public class MazeMaker {
 
 			unvisits.get(rand).setBeenVisited(true);
 			selectNextPath(currentCell);
-		} else if (getUnvisitedNeighbors(currentCell).size() == 0 && uncheckedCells.isEmpty() == false) {
+		} else if (uncheckedCells.isEmpty() == false) {
 			currentCell = uncheckedCells.pop();
 			selectNextPath(currentCell);
 		}
@@ -83,18 +108,18 @@ public class MazeMaker {
 			c1.setNorthWall(false);
 			c2.setSouthWall(false);
 
-		} else if (c1.getX() == c2.getX() && c1.getY() - c2.getY() == -1) {
+		} else if (c1.getX() == c2.getX() && c2.getY() - c1.getY() == 1) {
 			c1.setSouthWall(false);
-			c2.setNorthWall(true);
+			c2.setNorthWall(false);
 		}
 
-		else if (c1.getY() == c2.getY() && c1.getX() - c2.getX() == 1) {
-			c1.setEastWall(false);
-			c2.setWestWall(false);
-
-		} else if (c1.getY() == c2.getY() && c1.getX() - c2.getX() == 1) {
+		if (c1.getY() == c2.getY() && c1.getX() - c2.getX() == 1) {
 			c1.setWestWall(false);
 			c2.setEastWall(false);
+
+		} else if (c1.getY() == c2.getY() && c2.getX() - c1.getX() == 1) {
+			c1.setEastWall(false);
+			c2.setWestWall(false);
 		}
 
 	}
