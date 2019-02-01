@@ -18,8 +18,9 @@ public class CheckPoint {
 				}
 				
 				for (int i2 = 0; i2 < ints.length; i2++) {
-					for (int j2 = 0; j2 < ints[1].length; j2++) {
-						System.out.println(ints[i2][0] + "      " + ints[0][j2]);
+					System.out.println("");
+					for (int j2 = 0; j2 < ints[i2].length; j2++) {
+						System.out.print(ints[j2][i2] + "\t" );
 					}
 				}
 				
