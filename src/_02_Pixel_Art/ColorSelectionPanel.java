@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
@@ -25,12 +30,14 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 	private JSlider rSlider;
 	private JSlider gSlider;
 	private JSlider bSlider;
-	private JButton saver;
+	
 	private Color color;
 	
 	private int r = 0;
 	private int g = 0;
 	private int b = 0;
+	private static final String DATA_FILE = "src/_04_Serialization/saved.dat";
+	//GridPanel gp = new GridPanel(b, b, b, b);
 	
 	private JLabel colorLabel;
 	private BufferedImage colorImage;
@@ -39,7 +46,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		rSlider = new JSlider(JSlider.VERTICAL);
 		gSlider = new JSlider(JSlider.VERTICAL);
 		bSlider = new JSlider(JSlider.VERTICAL);
-		saver = new JButton();
+		
 		rSlider.setMinimum(0);
 		rSlider.setMaximum(MAX_COLOR - 1);
 		rSlider.setValue(0);
@@ -50,7 +57,7 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		bSlider.setMaximum(MAX_COLOR - 1);
 		bSlider.setValue(0);
 		
-		saver.addActionListener(this);
+		
 		
 		rSlider.addChangeListener(this);
 		gSlider.addChangeListener(this);
@@ -76,8 +83,8 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 		add(gSlider);
 		add(new JLabel("blue"));
 		add(bSlider);
-		add(saver);
-		saver.setText("Save!");
+		
+		
 	}
 
 	public Color getSelectedColor() {
@@ -136,14 +143,35 @@ public class ColorSelectionPanel extends JPanel implements MouseListener, Change
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource().equals(saver)) {
+		//if(e.getSource().equals(saver)) {
 			
-			System.out.println("button pressed");
+			//System.out.println("saving");
+			
+			
+	/*		try (FileOutputStream fos = new FileOutputStream(new File(DATA_FILE)); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+				oos.writeObject(data);
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+			
+	*/		
 			
 			
 			
 			
 			
 		}
+	
+	
+	private static void save(GridPanel gp) {
+		try (FileOutputStream fos = new FileOutputStream(new File(DATA_FILE)); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+			oos.writeObject(gp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
+	
+	
 }
